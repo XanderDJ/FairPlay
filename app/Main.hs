@@ -98,7 +98,7 @@ txtToPairs (c1 : c2 : cs) = if c1 == c2 then (c1 , 'x') : txtToPairs (c2 : cs) e
 
 keyToFPM :: String -> FPMatrix
 keyToFPM key = fmatrix
- where partialMatrix = foldl insert emptyFPM key
+ where partialMatrix = foldl insert emptyFPM $ (filter isLower . map toLower) key
        fmatrix = foldl insert partialMatrix alphabet
 
 
