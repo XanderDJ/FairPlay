@@ -45,24 +45,19 @@ encodeTxt fpm  = (concatMap (\(c1,c2) -> c1:c2:[]) . map (encodePair fpm) . txtT
 
 decodeTxt fpm = (concatMap (\(c1,c2) -> c1:c2:[]) . map (decodePair fpm) . txtToPairs . filter isLower . map toLower )
 
+encodePair :: FPMatrix -> (Char, Char) -> (Char, Char)
+encodePair fpm pair = getPair encodeRelatedPositions fpm pair 
+
+decodePair :: FPMatrix -> (Char, Char) -> (Char, Char)
+decodePair fpm pair = getPair decodeRelatedPositions fpm pair 
 
 
-encodePair :: FPMatrix -> (Char, Char) -> (Char,Char)
-encodePair fpm (c1,c2) = (c1',c2')
+getPair :: (Relation -> (Int,Int) -> (Int,Int) -> ((Int,Int), (Int, Int))) -> FPMatrix -> (Char, Char) -> (Char,Char)
+getPair method fpm (c1,c2) = (c1',c2')
  where p1 = getPosition fpm c1
        p2 = getPosition fpm c2
        rel = relation p1 p2
-       (p1', p2') = encodeRelatedPositions rel p1 p2
-       c1' = getCharFPM fpm p1'
-       c2' = getCharFPM fpm p2'
-
-
-decodePair :: FPMatrix -> (Char, Char) -> (Char,Char)
-decodePair fpm (c1,c2) = (c1',c2')
- where p1 = getPosition fpm c1
-       p2 = getPosition fpm c2
-       rel = relation p1 p2
-       (p1', p2') = decodeRelatedPositions rel p1 p2
+       (p1', p2') = method rel p1 p2
        c1' = getCharFPM fpm p1'
        c2' = getCharFPM fpm p2'
 
