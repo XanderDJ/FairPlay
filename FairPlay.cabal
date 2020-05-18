@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: fe4eb4b1f9b6cadc902366918280042ed2dffa9588e65ad9d81d059402502489
+-- hash: 54e56fa35dd4e177cefff1a913d74b532a992f959b2d15ed54c4c9e7102b6421
 
 name:           FairPlay
 version:        0.1.0.0
@@ -27,6 +27,7 @@ source-repository head
 
 library
   exposed-modules:
+      CommandLine
       Lib
   other-modules:
       Paths_FairPlay
